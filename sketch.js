@@ -142,9 +142,13 @@ function draw() {
   noStroke();
   textSize(40);
   let paddedScore = padScore(floor(score));
+  let paddedHighScore = padScore(lastScoreMilestone);
   let scoreText = "Score: " + paddedScore;
+  let highScoreText = "Highscore: " + paddedHighScore;
   let scoreWidth = textWidth(scoreText);
+  let highScoreWidth = textWidth(highScoreText);
   text(scoreText, width - scoreWidth - 100, 100);
+  text(highScoreText, width - highScoreWidth - 100, 50);
 }
 
 // handling small scores by adding 0s in front
