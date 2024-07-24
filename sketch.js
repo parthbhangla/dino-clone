@@ -189,10 +189,23 @@ function keyPressed() {
   if (key === "v") {
     visualizationMode = !visualizationMode;
   }
+  if (key === "r") {
+    restartGame();
+  }
 }
 
 function keyReleased() {
   if (key === "s") {
     dino.stopDucking();
   }
+}
+
+function restartGame() {
+  gameOver = false;
+  score = 0;
+  gameSpeed = 10;
+  obstacleSpawnRate = 50;
+  allObstacles = [];
+  dino = new Player();
+  ground = new Ground();
 }
