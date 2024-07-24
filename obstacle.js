@@ -30,10 +30,10 @@ class Obstacle {
         if (isBird) {
           if (dino.y + 30 > this.y && dino.y + 30 < this.y + this.height) {
             return true;
-          } else {
-            if (dino.y + 30 + dino.height - 60 > this.y) {
-              return true;
-            }
+          }
+        } else {
+          if (dino.y + 30 + dino.height - 60 > this.y) {
+            return true;
           }
         }
       }
