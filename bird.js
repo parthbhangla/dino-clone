@@ -17,7 +17,7 @@ class Bird extends Obstacle {
   static initBird() {
     let x = width + 225; // x-coordinate
     let y;
-    if ((random(1) < 0, 5)) {
+    if (random(1) < 0.5) {
       y = height - 206 - 250; // High flying bird
     } else {
       y = height - 206 - 350; // Low flying bird
