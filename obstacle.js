@@ -8,7 +8,7 @@ class Obstacle {
   }
 
   // Condition to check if the obstacle is offscreen
-  Offscreen() {
+  offScreen() {
     return this.x < -300;
   }
 

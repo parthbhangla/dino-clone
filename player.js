@@ -1,19 +1,19 @@
 class Player {
   constructor() {
-    this.width = width / 6; // Initial of the dino
+    this.x = width / 6; // x-coordinate of the dino
     this.y = height - 350; // y-coordinate of the dino
-    this.width = 132; // Actual width of the dino
+    this.width = 132;
     this.height = 144;
 
-    this.isGrounded = true; // Checking whether the dino is on the ground
-    this.isDucking = false; // Checking whether the dino is ducking
-    this.velocityY = 0;
-    this.gravity = 1;
-    this.maxFallSpeed = 30;
+    this.isGrounded = true; // Flag to check if the dino is on the ground
+    this.isDucking = false; // Flag to check if the dino is ducking
+    this.velocityY = 0; // y-velocity of the dino
+    this.gravity = 1; // Gravity acting on the dino
+    this.maxFallSpeed = 30; // Maximum fall speed of the dino
 
-    this.animTimer = 0; // Animation timer for the dino
-    this.displayRun1 = true; // Run 1 image
-    this.displayRun2 = false; // Run 2 image
+    this.animTimer = 0; // Animatiom timer
+    this.displayRun1 = true; // Flag to switch between the two running images
+    this.displayDuck1 = false; // Flag to switch between the two ducking images
   }
 
   move() {
