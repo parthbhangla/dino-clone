@@ -8,29 +8,29 @@ let dinoDuck1Img;
 let dinoDuck2Img;
 
 let largeTripleCactusImg;
-let lardeDoubleCactusImg;
+let largeDoubleCactusImg;
 let largeSingleCactusImg;
 let smallTripleCactusImg;
 let smallDoubleCactusImg;
 let smallSingleCactusImg;
 
 let allObstacleImgs = [];
-let obstacleSpawnRate = 50;
+let obstacleSpawnTimer = 50; // Spawn timer for obstacles
 
 let allObstacles = [];
 
 let dino;
 
 let gameSpeed = 10;
-let speedIncrease = 0.5;
+let speedIncrement = 0.5; // Speed increment for the game
 let score = 0;
-let lastHighScore = 0;
+let lastScoreMilestone = 0; // Highscore helper
 
 let font;
 
-let gameOver = false; // Flag to check if the game is over
+let gameOver = false; // Game over flag
 
-let visualizationMode = false; // Flag to check if the visualization mode is on
+let visualizationMode = false; // Flag for visualization mode
 
 // Loading the assets (images and font) before the game starts
 function preload() {
@@ -78,15 +78,15 @@ function draw() {
   }
 
   // Spawning new cactus
-  if (obstacleSpawnRate >= 110 - gameSpeed) {
+  if (obstacleSpawnTimer >= 110 - gameSpeed) {
     if (random(1) < 0.9) {
       allObstacles.push(new Cactus());
     } else {
-      allObstacleImgs.push(new Bird());
+      allObstacles.push(new Bird());
     }
-    obstacleSpawnRate = getRandomInterval();
+    obstacleSpawnTimer = getRandomInterval();
   }
-  obstacleSpawnRate++;
+  obstacleSpawnTimer++;
 
   // if the letter 's' is pressed, dino -> duck
   if (keyIsDown(83)) {
@@ -97,9 +97,9 @@ function draw() {
   ground.update();
   dino.update();
   score += gameSpeed / 60;
-  if (floor(score) - lastHighScore >= 100) {
-    lastHighScore = floor(score);
-    gameSpeed += speedIncrease;
+  if (floor(score) - lastScoreMilestone >= 100) {
+    lastScoreMilestone = floor(score);
+    gameSpeed += speedIncrement;
   }
 
   // obstacle logic
@@ -125,6 +125,7 @@ function draw() {
   // visuals
   background(247);
   ground.show();
+
   // showing obstacles
   for (let i = 0; i < allObstacles.length; i++) {
     allObstacles[i].show();
@@ -144,54 +145,54 @@ function draw() {
   let scoreText = "Score: " + paddedScore;
   let scoreWidth = textWidth(scoreText);
   text(scoreText, width - scoreWidth - 100, 100);
+}
 
-  // handling small scores by adding 0s in front
-  function padScore(score) {
-    let scoreStr = score.toString();
-    while (scoreStr.length < 5) {
-      scoreStr = "0" + scoreStr;
-    }
-    return scoreStr;
+// handling small scores by adding 0s in front
+function padScore(score) {
+  let scoreStr = score.toString();
+  while (scoreStr.length < 5) {
+    scoreStr = "0" + scoreStr;
+  }
+  return scoreStr;
+}
+
+// random interval range for spawning cactus
+function getRandomInterval() {
+  return int(random(-30, 30));
+}
+
+// visualizing the bouding boxes for collision detection
+function visualizeHitBoxes() {
+  stroke(255, 0, 0);
+  noFill();
+  // boxes condition based on dino ducking or not
+  if (dino.isDucking) {
+    rect(dino.x + 30, dino.y + 60, dino.width - 60, dino.height - 60);
+  } else {
+    rect(dino.x + 30, dino.y + 30, dino.width - 60, dino.height - 60);
   }
 
-  // random interquartile range for spawning cactus
-  function getRandomInterval() {
-    return int(random(-30, 30));
+  // obstacle visualization
+  for (let i = 0; i < allObstacles.length; i++) {
+    let obstacle = allObstacles[i];
+    rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
   }
+}
 
-  // visualizing the bouding boxes for collision detection
-  function visualizeHitBoxes() {
-    stroke(255, 0, 0);
-    noFill();
-    // boxes condition based on dino ducking or not
-    if (dino.isDucking) {
-      rect(dino.x + 30, dino.y + 60, dino.width - 60, dino.height - 60);
-    } else {
-      rect(dino.x + 30, dino.y + 30, dino.width - 60, dino.height - 60);
-    }
-
-    // obstacle visualization
-    for (let i = 0; i < allObstacles.length; i++) {
-      let obstacle = allObstacles[i];
-      rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-    }
+function keyPressed() {
+  if (key === "w") {
+    dino.jump(true);
   }
-
-  function keyPressed() {
-    if (key === "w") {
-      dino.jump(true); // big jump
-    }
-    if (key === "e") {
-      dino.jump(false); // small jump
-    }
-    if (key === "v") {
-      visualizationMode = !visualizationMode;
-    }
+  if (key === "e") {
+    dino.jump(false);
   }
+  if (key === "v") {
+    visualizationMode = !visualizationMode;
+  }
+}
 
-  function keyReleased() {
-    if (key === "s") {
-      dino.stopDucking();
-    }
+function keyReleased() {
+  if (key === "s") {
+    dino.stopDucking();
   }
 }
